@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+
+  mongo:
+    build:
+      context: ./mongo
+      dockerfile: Dockerfile
+    command: "mongod --smallfiles"
+
+  strider:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_URI=mongodb://mongo:27017
+      - GENERATE_ADMIN_USER=1
+      - SERVER_NAME=$SERVER_NAME
+    depends_on:
+      - mongo
+    ports:
+      - "8181:3000"
