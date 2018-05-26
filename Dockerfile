@@ -27,8 +27,10 @@ RUN ln -s /opt/strider/src/bin/strider /usr/local/bin/strider
 USER strider
 ENV HOME /home/strider
 
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
+
 RUN git clone --branch $STRIDER_TAG --depth 1 $STRIDER_REPO /opt/strider/src && \
-  cd /opt/strider/src && npm install && npm run build
+  cd /opt/strider/src && cnpm install && cnpm run build
 COPY start.sh /usr/local/bin/start.sh
 ADD strider.conf /etc/supervisor/conf.d/strider.conf
 EXPOSE 3000
