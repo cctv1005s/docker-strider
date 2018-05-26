@@ -24,10 +24,10 @@ RUN adduser --disabled-password --gecos "" --home /home/strider strider
 RUN chown -R strider:strider /home/strider
 RUN chown -R strider:strider /opt/strider
 RUN ln -s /opt/strider/src/bin/strider /usr/local/bin/strider
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
+
 USER strider
 ENV HOME /home/strider
-
-RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
 
 RUN git clone --branch $STRIDER_TAG --depth 1 $STRIDER_REPO /opt/strider/src && \
   cd /opt/strider/src && cnpm install && cnpm run build
